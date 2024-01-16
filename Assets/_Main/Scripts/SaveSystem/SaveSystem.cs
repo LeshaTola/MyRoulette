@@ -4,9 +4,6 @@ using YG;
 public class SaveSystem : MonoBehaviour
 {
 	[SerializeField] private Wallet wallet;
-	//[SerializeField] private float saveCooldown = 30f;
-
-	private float saveTimer;
 
 	private void OnEnable() => YandexGame.GetDataEvent += Load;
 
@@ -18,23 +15,7 @@ public class SaveSystem : MonoBehaviour
 		{
 			Load();
 		}
-		//saveTimer = saveCooldown;
 	}
-
-	/*	private void Update()
-		{
-			HandlePeriodicallySaving();
-		}
-
-		private void HandlePeriodicallySaving()
-		{
-			saveTimer -= Time.deltaTime;
-			if (saveTimer <= 0)
-			{
-				saveTimer = saveCooldown;
-				Save();
-			}
-		}*/
 
 	public void Load()
 	{
