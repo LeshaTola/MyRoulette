@@ -71,7 +71,7 @@ public class RouletteUI : MonoBehaviour
 
 	private void RestartRolette(float restartTime)
 	{
-		SpinRolette(0, 0, restartTime);
+		container.DOAnchorPosX(startPositionX, restartTime).SetEase(rouletteSpeed);
 	}
 
 	private void SpinRolette(int spins, int id, float spinTime)
@@ -81,8 +81,10 @@ public class RouletteUI : MonoBehaviour
 		float halfOfCellWidth = cellWidth / 2;
 		float littleOffset = Random.Range(-(halfOfCellWidth - 10), (halfOfCellWidth - 10));
 
-		container.DOMoveX(startPositionX - fullSpinRange - spinRangeForCell + littleOffset, spinTime).SetEase(rouletteSpeed);
+		container.DOAnchorPosX(startPositionX - fullSpinRange - spinRangeForCell + littleOffset, spinTime).SetEase(rouletteSpeed);
 	}
+
+	//private Ienumerator
 
 	private void OnRoletteRestart(float time)
 	{

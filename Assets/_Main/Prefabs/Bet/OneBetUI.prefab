@@ -479,7 +479,7 @@ MonoBehaviour:
   startLoad: 1
   rawImage: {fileID: 0}
   spriteImage: {fileID: 8954888280659929164}
-  urlImage: 
+  urlImage: https://justplaygames.ru/public/icon_player.png
   loadAnimObj: {fileID: 0}
   debug: 0
 --- !u!114 &8931113431533037647
