@@ -1,11 +1,22 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using YG;
 
 public class WalletUI : MonoBehaviour
 {
 	[SerializeField] private Wallet wallet;
 	[SerializeField] private TextMeshProUGUI moneyText;
+	[SerializeField] private Button AddMoneyButton;
+
+	private void Awake()
+	{
+		AddMoneyButton.onClick.AddListener(() =>
+		{
+			YandexGame.RewVideoShow((int)RewardId.AddMoney);
+		});
+	}
 
 	private void Start()
 	{

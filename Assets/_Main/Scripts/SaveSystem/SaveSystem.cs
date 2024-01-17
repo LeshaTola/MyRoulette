@@ -4,6 +4,7 @@ using YG;
 public class SaveSystem : MonoBehaviour
 {
 	[SerializeField] private Wallet wallet;
+	[SerializeField] private Roulette roulette;
 
 	private void OnEnable() => YandexGame.GetDataEvent += Load;
 
@@ -15,6 +16,12 @@ public class SaveSystem : MonoBehaviour
 		{
 			Load();
 		}
+		roulette.OnStateChanged += OnRouletteStateChanged;
+	}
+
+	private void OnDestroy()
+	{
+		roulette.OnStateChanged -= OnRouletteStateChanged;
 	}
 
 	public void Load()
@@ -27,5 +34,13 @@ public class SaveSystem : MonoBehaviour
 		wallet.SaveData();
 
 		YandexGame.SaveProgress();
+	}
+
+	private void OnRouletteStateChanged(RouletteState state)
+	{
+		if (state == RouletteState.Show)
+		{
+			Save();
+		}
 	}
 }

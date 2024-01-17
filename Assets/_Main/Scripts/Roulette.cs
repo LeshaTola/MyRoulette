@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using YG;
 
 public enum RouletteState
 {
@@ -164,6 +165,7 @@ public class Roulette : MonoBehaviour
 					break;
 			}
 		}
+		YandexGame.NewLeaderboardScores("Money", (int)(wallet.Money * 100));
 	}
 
 	public BetType GetViningBet()
