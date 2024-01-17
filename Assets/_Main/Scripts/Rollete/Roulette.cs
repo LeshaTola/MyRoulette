@@ -35,6 +35,7 @@ public class Roulette : MonoBehaviour
 	[SerializeField] private float restartTime;
 
 	[SerializeField] private Wallet wallet;
+	[SerializeField] private AudioClip betTimeSound;
 
 	private float bettingTimer;
 	private float scrollTimer;
@@ -52,6 +53,7 @@ public class Roulette : MonoBehaviour
 
 		state = RouletteState.Betting;
 		OnStateChanged?.Invoke(state);
+		SoundManager.PlaySound(betTimeSound, Vector3.zero);
 
 		bettingTimer = bettingTime;
 		scrollTimer = scrollTime;
@@ -115,6 +117,7 @@ public class Roulette : MonoBehaviour
 
 					state = RouletteState.Betting;
 					OnStateChanged?.Invoke(state);
+					SoundManager.PlaySound(betTimeSound, Vector3.zero);
 				}
 				break;
 		}
