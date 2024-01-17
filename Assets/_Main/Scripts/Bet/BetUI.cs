@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,7 +26,6 @@ public class BetUI : MonoBehaviour
 	[Header("Other")]
 	[SerializeField] private Wallet wallet;
 	[SerializeField] private Roulette roulette;
-
 
 	private void Awake()
 	{
@@ -67,13 +67,14 @@ public class BetUI : MonoBehaviour
 	private void Start()
 	{
 		betInputField.onValueChanged.AddListener((string s) => { Validate(); });
-
+		roulette.OnBetting += OnBetting;
 		roulette.OnStateChanged += OnRouletteStateChanged;
 	}
 
 	private void OnDestroy()
 	{
 		roulette.OnStateChanged -= OnRouletteStateChanged;
+		roulette.OnBetting -= OnBetting;
 	}
 
 	private void AddToInputField(float amount)
@@ -125,5 +126,10 @@ public class BetUI : MonoBehaviour
 				betScissorsButton.interactable = false;
 				break;
 		}
+	}
+
+	private void OnBetting(List<Bet> obj)
+	{
+		Validate();
 	}
 }

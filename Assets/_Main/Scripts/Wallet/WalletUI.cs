@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -24,7 +25,7 @@ public class WalletUI : MonoBehaviour
 
 	private void UpdateUI(float coins)
 	{
-		moneyText.text = coins.ToString();
+		moneyText.text = Math.Round(coins, 2).ToString();
 
 	}
 }

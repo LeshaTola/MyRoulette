@@ -26,6 +26,7 @@ public class Roulette : MonoBehaviour
 	public event Action<int, int, float> OnRoletteStartSpin;
 	public event Action<RouletteState> OnStateChanged;
 	public event Action<float> OnRoletteRestart;
+	public event Action<List<Bet>> OnBetting;
 
 	[SerializeField] private float bettingTime;
 	[SerializeField] private float scrollTime;
@@ -47,7 +48,10 @@ public class Roulette : MonoBehaviour
 	private void Start()
 	{
 		bets = new List<Bet>();
+
 		state = RouletteState.Betting;
+		OnStateChanged?.Invoke(state);
+
 		bettingTimer = bettingTime;
 		scrollTimer = scrollTime;
 		showTimer = showTime;
@@ -63,11 +67,14 @@ public class Roulette : MonoBehaviour
 				if (bettingTimer <= 0)
 				{
 					bettingTimer = bettingTime;
+
 					RandomSpin();
+
 					state = RouletteState.Scrolling;
+					OnStateChanged?.Invoke(state);
 				}
-				OnBettingTimerChanged?.Invoke(bettingTime);
-				OnStateChanged?.Invoke(state);
+
+				OnBettingTimerChanged?.Invoke(bettingTimer);
 				break;
 
 			case RouletteState.Scrolling:
@@ -75,6 +82,7 @@ public class Roulette : MonoBehaviour
 				if (scrollTimer <= 0)
 				{
 					scrollTimer = scrollTime;
+
 					state = RouletteState.Show;
 					OnStateChanged?.Invoke(state);
 				}
@@ -90,6 +98,7 @@ public class Roulette : MonoBehaviour
 
 					state = RouletteState.Restart;
 					OnStateChanged?.Invoke(state);
+
 					OnRoletteRestart?.Invoke(restartTime);
 				}
 				break;
@@ -101,6 +110,8 @@ public class Roulette : MonoBehaviour
 					restartTimer = restartTime;
 
 					bets.Clear();
+					OnBetting?.Invoke(bets);
+
 					state = RouletteState.Betting;
 					OnStateChanged?.Invoke(state);
 				}
@@ -126,11 +137,12 @@ public class Roulette : MonoBehaviour
 
 		wallet.DenyMoney(bet.Value);
 		bets.Add(bet);
+		OnBetting?.Invoke(bets);
 	}
 
 	private void ValidateBet()
 	{
-		BetType viningBet = DeterminateViningBet();
+		BetType viningBet = GetViningBet();
 
 		foreach (var bet in bets)
 		{
@@ -154,7 +166,7 @@ public class Roulette : MonoBehaviour
 		}
 	}
 
-	private BetType DeterminateViningBet()
+	public BetType GetViningBet()
 	{
 		if (currentCell == 0)
 		{

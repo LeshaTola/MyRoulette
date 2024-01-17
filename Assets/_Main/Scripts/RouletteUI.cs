@@ -4,6 +4,7 @@ using UnityEngine;
 public class RouletteUI : MonoBehaviour
 {
 	[Header("Main")]
+	[SerializeField] private AnimationCurve rouletteSpeed;
 	[SerializeField] private Roulette roulette;
 	[SerializeField] private Cell paper;
 	[SerializeField] private Cell rock;
@@ -11,6 +12,10 @@ public class RouletteUI : MonoBehaviour
 
 	[Header("Rolette Container")]
 	[SerializeField] private RectTransform container;
+
+	[Header("Other")]
+	[SerializeField] private GameObject pointer;
+	[SerializeField] private RouletteTimerUI TimerUI;
 
 	private float cellWidth;
 	private float startPositionX;
@@ -26,14 +31,14 @@ public class RouletteUI : MonoBehaviour
 	{
 		roulette.OnRoletteStartSpin += OnRoletteStartSpin;
 		roulette.OnRoletteRestart += OnRoletteRestart;
-		roulette.OnBettingTimerChanged += OnBettingTimerChanged;
+		roulette.OnStateChanged += OnRouletteStateChanged;
 	}
 
 	private void OnDestroy()
 	{
 		roulette.OnRoletteStartSpin -= OnRoletteStartSpin;
 		roulette.OnRoletteRestart -= OnRoletteRestart;
-		roulette.OnBettingTimerChanged -= OnBettingTimerChanged;
+		roulette.OnStateChanged -= OnRouletteStateChanged;
 	}
 
 	private void CreateRolette()
@@ -73,13 +78,10 @@ public class RouletteUI : MonoBehaviour
 	{
 		float fullSpinRange = spins * cellWidth * Roulette.COUNT_OF_CELLS;
 		float spinRangeForCell = id * cellWidth;
+		float halfOfCellWidth = cellWidth / 2;
+		float littleOffset = Random.Range(-(halfOfCellWidth - 10), (halfOfCellWidth - 10));
 
-		container.DOMoveX(startPositionX - fullSpinRange - spinRangeForCell, spinTime);
-	}
-
-	private void OnBettingTimerChanged(float time)
-	{
-		//throw new System.NotImplementedException();
+		container.DOMoveX(startPositionX - fullSpinRange - spinRangeForCell + littleOffset, spinTime).SetEase(rouletteSpeed);
 	}
 
 	private void OnRoletteRestart(float time)
@@ -90,5 +92,19 @@ public class RouletteUI : MonoBehaviour
 	private void OnRoletteStartSpin(int spins, int id, float time)
 	{
 		SpinRolette(spins, id, time);
+	}
+
+	private void OnRouletteStateChanged(RouletteState obj)
+	{
+		if (obj == RouletteState.Betting)
+		{
+			pointer.SetActive(false);
+			TimerUI.Show();
+		}
+		else
+		{
+			pointer.SetActive(true);
+			TimerUI.Hide();
+		}
 	}
 }
