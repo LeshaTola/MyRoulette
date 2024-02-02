@@ -6,9 +6,9 @@ public class Wallet : MonoBehaviour, IUseSaves
 {
 	public event Action OnMoneyChanged;
 
-	public float Money { get; private set; }
+	public int Money { get; private set; }
 
-	public void AddMoney(float count)
+	public void AddMoney(int count)
 	{
 		if (count <= 0)
 		{
@@ -19,7 +19,7 @@ public class Wallet : MonoBehaviour, IUseSaves
 		OnMoneyChanged?.Invoke();
 	}
 
-	public void DenyMoney(float count)
+	public void DenyMoney(int count)
 	{
 		if (count <= 0)
 		{

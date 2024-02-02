@@ -10,6 +10,6 @@ namespace YG
 		public string language = "ru";
 		public bool promptDone;
 
-		public float Money = 100f;
+		public int Money = 1000;
 	}
 }

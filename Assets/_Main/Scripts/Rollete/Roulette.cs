@@ -191,5 +191,5 @@ public class Roulette : MonoBehaviour
 public class Bet
 {
 	public BetType Type;
-	public float Value;
+	public int Value;
 }

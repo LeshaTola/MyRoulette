@@ -9,9 +9,9 @@ public class BetUI : MonoBehaviour
 
 	[Header("Input Field Buttons")]
 	[SerializeField] private Button clearButton;
-	[SerializeField] private Button add001Button;
-	[SerializeField] private Button add01Button;
 	[SerializeField] private Button add1Button;
+	[SerializeField] private Button add2Button;
+	[SerializeField] private Button add5Button;
 	[SerializeField] private Button add10Button;
 	[SerializeField] private Button add100Button;
 	[SerializeField] private Button subtractButton;
@@ -34,11 +34,11 @@ public class BetUI : MonoBehaviour
 			betInputField.text = "";
 		});
 
-		add001Button.onClick.AddListener(() => AddToInputField(0.01f));
-		add01Button.onClick.AddListener(() => AddToInputField(0.1f));
-		add1Button.onClick.AddListener(() => AddToInputField(1f));
-		add10Button.onClick.AddListener(() => AddToInputField(10f));
-		add100Button.onClick.AddListener(() => AddToInputField(100f));
+		add1Button.onClick.AddListener(() => AddToInputField(1));
+		add2Button.onClick.AddListener(() => AddToInputField(2));
+		add5Button.onClick.AddListener(() => AddToInputField(5));
+		add10Button.onClick.AddListener(() => AddToInputField(10));
+		add100Button.onClick.AddListener(() => AddToInputField(100));
 
 		subtractButton.onClick.AddListener(() =>
 		{
@@ -77,21 +77,21 @@ public class BetUI : MonoBehaviour
 		roulette.OnBetting -= OnBetting;
 	}
 
-	private void AddToInputField(float amount)
+	private void AddToInputField(int amount)
 	{
 		float currentValue = ParseInput();
 		currentValue += amount;
 		betInputField.text = currentValue.ToString();
 	}
 
-	private float ParseInput()
+	private int ParseInput()
 	{
 		if (string.IsNullOrEmpty(betInputField.text))
 		{
-			return 0f;
+			return 0;
 		}
 
-		float.TryParse(betInputField.text, out float res);
+		int.TryParse(betInputField.text, out var res);
 
 		return res;
 	}
