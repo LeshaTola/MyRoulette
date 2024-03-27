@@ -21,7 +21,7 @@ public class RewardManager : MonoBehaviour
 		switch (rewardId)
 		{
 			case RewardId.AddMoney:
-				int addMoneyAmount = 500;
+				int addMoneyAmount = 200;
 				wallet.AddMoney(addMoneyAmount);
 				break;
 		}

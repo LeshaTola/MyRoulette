@@ -42,14 +42,14 @@ public class BetUI : MonoBehaviour
 
 		subtractButton.onClick.AddListener(() =>
 		{
-			float currentValue = ParseInput();
+			int currentValue = ParseInput();
 			currentValue /= 2;
 			betInputField.text = currentValue.ToString();
 		});
 
 		multiplyButton.onClick.AddListener(() =>
 		{
-			float currentValue = ParseInput();
+			int currentValue = ParseInput();
 			currentValue *= 2;
 			betInputField.text = currentValue.ToString();
 		});
@@ -79,7 +79,7 @@ public class BetUI : MonoBehaviour
 
 	private void AddToInputField(int amount)
 	{
-		float currentValue = ParseInput();
+		int currentValue = ParseInput();
 		currentValue += amount;
 		betInputField.text = currentValue.ToString();
 	}
@@ -98,11 +98,11 @@ public class BetUI : MonoBehaviour
 
 	private void Validate()
 	{
-		float currentValue = ParseInput();
+		int currentValue = ParseInput();
 
 		if (currentValue < 0f)
 		{
-			betInputField.text = "0,00";
+			betInputField.text = "0";
 		}
 
 		if (currentValue > wallet.Money)
